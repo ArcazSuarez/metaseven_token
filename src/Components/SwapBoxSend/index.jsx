@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useContext } from "react";
-import { UM7Context } from "@/context/um7Context";
+import { UM7Context } from "../../context/um7Context";
 const SwapBoxSend = () => {
 	const [address, setAddress] = useState("");
 	const [value, setValue] = useState("");
