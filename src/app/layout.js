@@ -1,8 +1,8 @@
 "use client";
 import "./globals.css";
-import { Inter } from "next/font/google";
+// import { Inter } from "next/font/google";
 import Navbar from "../Components/NavBar";
-const inter = Inter({ subsets: ["latin"] });
+// const inter = Inter({ subsets: ["latin"] });
 import { UM7Provider } from "../context/um7Context";
 import {
 	EthereumClient,
@@ -26,7 +26,7 @@ const ethereumClient = new EthereumClient(wagmiConfig, chains);
 export default function RootLayout({ children }) {
 	return (
 		<html lang="en">
-			<body className={`${inter.className} container`}>
+			<body >
 				<WagmiConfig config={wagmiConfig}>
 					<UM7Provider>
 						<Navbar />
