@@ -1,7 +1,7 @@
 "use client";
 import "./globals.css";
 // import { Inter } from "next/font/google";
-import Navbar from "@/Components/NavBar";
+import Navbar from "@/Components/Navbar";
 // const inter = Inter({ subsets: ["latin"] });
 import { UM7Provider } from "@/context/um7Context";
 import {
