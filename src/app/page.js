@@ -1,6 +1,5 @@
-import Image from "next/image";
-import SwapBoxBuy from "../Components/SwapBoxBuy";
-import SwapBoxSend from "../Components/SwapBoxSend";
+import SwapBoxBuy from "@/Components/SwapBoxBuy";
+import SwapBoxSend from "@/Components/SwapBoxSend";
 export default function Home() {
 	return (
 		<div className="flex items-center justify-center h-screen bg-gray-200">

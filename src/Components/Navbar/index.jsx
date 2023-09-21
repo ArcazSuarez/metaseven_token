@@ -1,7 +1,7 @@
 "use client";
 import React, { useContext } from "react";
 import Link from "next/link";
-import { UM7Context } from "../../context/um7Context";
+import { UM7Context } from "@/context/um7Context";
 
 const Navbar = () => {
 	const { connectWallet, currentAccount } = useContext(UM7Context);

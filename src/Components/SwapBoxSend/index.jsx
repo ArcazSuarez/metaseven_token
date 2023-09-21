@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useContext, useEffect } from "react";
-import { UM7Context } from "../../context/um7Context";
+import { UM7Context } from "@/context/um7Context";
 import axios from "axios";
 const SwapBoxSend = ({ user_id }) => {
 	const [address, setAddress] = useState("");

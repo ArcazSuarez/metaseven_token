@@ -1,6 +1,6 @@
 "use client";
-import SwapBoxBuy from "../../../Components/SwapBoxBuy";
-import SwapBoxSend from "../../../Components/SwapBoxSend";
+import SwapBoxBuy from "@/Components/SwapBoxBuy";
+import SwapBoxSend from "@/Components/SwapBoxSend";
 export default function Transaction({ params }) {
 	const { user_id } = params;
 	return (
