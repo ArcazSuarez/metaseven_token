@@ -1,14 +1,33 @@
 "use client";
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { UM7Context } from "../../context/um7Context";
-const SwapBoxSend = () => {
+import axios from "axios";
+const SwapBoxSend = ({ user_id }) => {
 	const [address, setAddress] = useState("");
 	const [value, setValue] = useState("");
 	const [trxHash, setTrxHash] = useState("");
 	const { sendTokens } = useContext(UM7Context);
+	const url = "https://webhook.site/fd52eaa3-78a2-41e2-93dc-96904e62a179";
 	const send = async () => {
 		try {
 			const trxHash = await sendTokens(value, address);
+			let config = {
+				headers: {
+					"Content-Type": "application/json",
+					"Access-Control-Allow-Origin": "*",
+				},
+			};
+			const postData = {
+				user_id: user_id,
+				transaction_hash: trxHash.hash,
+				api_token_id: "",
+			};
+			axios
+				.post(url, postData, config)
+				.then((res) => {})
+				.catch((err) => {
+					console.log(err);
+				});
 			setTrxHash(trxHash.hash);
 		} catch (error) {
 			console.log("Something went wrong while sending tokens", error);

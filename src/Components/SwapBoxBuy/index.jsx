@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useContext } from "react";
 import { UM7Context } from "../../context/um7Context";
-const SwapBoxBuy = () => {
+const SwapBoxBuy = ({ user_id }) => {
 	const [fromValue, setFromValue] = useState("");
 	const { swapTokens } = useContext(UM7Context);
 

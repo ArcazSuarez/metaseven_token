@@ -56,7 +56,6 @@ export const UM7Provider = ({ children }) => {
 	};
 
 	const swapTokens = async (amount) => {
-		console.log("swapTokens");
 		const transferAmount = ethers.utils.parseEther(amount);
 		const signer = await getSigner();
 		const usdtContract = new ethers.Contract(usdtAddress, erc20ABI, signer);
@@ -78,13 +77,12 @@ export const UM7Provider = ({ children }) => {
 	};
 
 	const sendTokens = async (amount, toAddress) => {
-		console.log("sendTokens");
 		const transferAmount = ethers.utils.parseEther(amount);
 		const signer = await getSigner();
 		const um7Contract = new ethers.Contract(um7Address, erc20ABI, signer);
 		const trx = await um7Contract.transfer(toAddress, transferAmount);
-        console.log(trx);
 		await trx.wait();
+		
 		return trx;
 	};
 
