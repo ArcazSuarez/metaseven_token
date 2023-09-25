@@ -2,9 +2,9 @@
 import React, { useState, useContext, useEffect } from "react";
 import { UM7Context } from "@/context/um7Context";
 import axios from "axios";
-const SwapBoxSend = ({ user_id }) => {
+const SwapBoxSend = ({ user_id, amount }) => {
 	const [address, setAddress] = useState("");
-	const [value, setValue] = useState("");
+	const [value, setValue] = useState(amount);
 	const [trxHash, setTrxHash] = useState("");
 	const { sendTokens } = useContext(UM7Context);
 	const url = "https://webhook.site/fd52eaa3-78a2-41e2-93dc-96904e62a179";
