@@ -2,7 +2,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { UM7Context } from "@/context/um7Context";
 import axios from "axios";
-const SwapBoxSend = ({ user_id, amount }) => {
+const SwapBoxSend = ({ user_id, amount, orderid }) => {
 	const [address, setAddress] = useState("");
 	const [value, setValue] = useState(amount);
 	const [trxHash, setTrxHash] = useState("");
@@ -22,6 +22,7 @@ const SwapBoxSend = ({ user_id, amount }) => {
 				transaction_hash: trxHash.hash,
 				api_token_id: "",
 				amount: value,
+				orderid: orderid,
 			};
 			axios
 				.post(url, postData, config)
