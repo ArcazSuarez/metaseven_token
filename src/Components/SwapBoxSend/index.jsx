@@ -23,6 +23,7 @@ const SwapBoxSend = ({ user_id, amount, orderid }) => {
 				api_token_id: "",
 				amount: value,
 				orderid: orderid,
+				type: "bsc",
 			};
 			axios
 				.post(url, postData, config)
