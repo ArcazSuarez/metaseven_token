@@ -11,8 +11,8 @@ import {
 } from "@web3modal/ethereum";
 import { Web3Modal } from "@web3modal/react";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
-import { polygon, sepolia, mainnet } from "wagmi/chains";
-const chains = [polygon, sepolia, mainnet];
+import { bsc, sepolia } from "wagmi/chains";
+const chains = [bsc, sepolia];
 const projectId = "90bf105ef4aa4e1e16a2d0284385ed7a";
 
 const { publicClient } = configureChains(chains, [w3mProvider({ projectId })]);
@@ -26,7 +26,7 @@ const ethereumClient = new EthereumClient(wagmiConfig, chains);
 export default function RootLayout({ children }) {
 	return (
 		<html lang="en">
-			<body >
+			<body>
 				<WagmiConfig config={wagmiConfig}>
 					<UM7Provider>
 						<Navbar />
