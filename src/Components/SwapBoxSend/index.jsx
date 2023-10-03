@@ -22,7 +22,7 @@ const SwapBoxSend = ({ user_id, amount, orderid }) => {
 				transaction_hash: trxHash.hash,
 				api_token_id: "",
 				amount: value,
-				orderid: orderid,
+				order_code: orderid,
 				type: "bsc",
 			};
 			axios
