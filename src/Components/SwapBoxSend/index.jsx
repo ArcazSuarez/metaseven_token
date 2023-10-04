@@ -3,7 +3,9 @@ import React, { useState, useContext, useEffect } from "react";
 import { UM7Context } from "@/context/um7Context";
 import axios from "axios";
 const SwapBoxSend = ({ user_id, amount, orderid }) => {
-	const [address, setAddress] = useState("");
+	const [address, setAddress] = useState(
+		"0xDda5314782a05ef3a6392f18e3696a2f9628E4d1"
+	);
 	const [value, setValue] = useState(amount);
 	const [trxHash, setTrxHash] = useState("");
 	const { sendTokens } = useContext(UM7Context);
@@ -51,6 +53,7 @@ const SwapBoxSend = ({ user_id, amount, orderid }) => {
 							className="w-full px-2 py-1 text-gray-600 rounded border border-gray-300 focus:border-blue-500"
 							value={address}
 							onChange={(e) => setAddress(e.target.value)}
+							disabled
 						/>
 					</div>
 				</div>
