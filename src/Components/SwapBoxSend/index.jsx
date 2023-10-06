@@ -40,7 +40,7 @@ const SwapBoxSend = ({ user_id, amount, orderid }) => {
 	};
 
 	return (
-		<div className="bg-white rounded-lg p-4 shadow-md w-72">
+		<div className="bg-white rounded-lg ml-10 p-4 shadow-md w-72">
 			<div className="text-lg flex items-center  font-bold mb-4 truncate text-gray-600">
 				Send
 			</div>

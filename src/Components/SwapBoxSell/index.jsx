@@ -1,19 +1,19 @@
 "use client";
 import React, { useState, useContext } from "react";
 import { UM7Context } from "@/context/um7Context";
-const SwapBoxBuy = ({ user_id, amount }) => {
+const SwapBoxSell = ({ user_id, amount }) => {
 	const [fromValue, setFromValue] = useState("");
-	const { swapTokens } = useContext(UM7Context);
+	const { sellUm7Tokens } = useContext(UM7Context);
 
 	return (
-		<div className="bg-white ml-10 rounded-lg p-4 shadow-md w-72">
+		<div className="bg-white rounded-lg  ml-10 p-4 shadow-md w-72">
 			<div className="text-lg flex items-center font-bold mb-4 text-gray-600">
-				Buy
+				Sell
 			</div>
 			<div className="flex flex-col gap-4">
 				<div className="flex items-center justify-between">
 					<div className="flex items-center gap-2">
-						<div className="text-gray-600">USDT</div>
+						<div className="text-gray-600">UM7</div>
 						<input
 							type="number"
 							placeholder="0.0"
@@ -27,7 +27,7 @@ const SwapBoxBuy = ({ user_id, amount }) => {
 
 				<div className="flex items-center justify-between">
 					<div className="flex items-center gap-2">
-						<div className="text-gray-600">UM7</div>
+						<div className="text-gray-600">USDT</div>
 						<input
 							type="number"
 							placeholder="0.0"
@@ -40,12 +40,12 @@ const SwapBoxBuy = ({ user_id, amount }) => {
 			</div>
 			<button
 				className="w-full mt-4 py-2 bg-green-500 text-white rounded"
-				onClick={() => swapTokens(fromValue)}
+				onClick={() => sellUm7Tokens(fromValue)}
 			>
-				Buy
+				Sell
 			</button>
 		</div>
 	);
 };
 
-export default SwapBoxBuy;
+export default SwapBoxSell;

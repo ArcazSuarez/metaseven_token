@@ -61,19 +61,39 @@ export const UM7Provider = ({ children }) => {
 		const usdtContract = new ethers.Contract(usdtAddress, erc20ABI, signer);
 
 		const usdtBalance = await usdtContract.balanceOf(currentAccount);
-		if (Number(usdtBalance) * 10 ** 12 < transferAmount) {
+		if (Number(usdtBalance) < transferAmount) {
 			alert("insufficient balance");
 			return;
 		}
 
-		var trx = await usdtContract.transfer(owner, Number(amount) * 10 ** 6);
+		var trx = await usdtContract.transfer(owner, Number(transferAmount));
 		await trx.wait();
 		const providerObj = new ethers.providers.JsonRpcProvider(provider);
 		const wallet = new Wallet(key, providerObj);
 		const um7Contract = new ethers.Contract(um7Address, erc20ABI, wallet);
 		trx = await um7Contract.transfer(currentAccount, transferAmount);
 		await trx.wait();
-		alert("Swap Successful");
+		alert("USDT to UM7 Swap Successful");
+	};
+	const sellUm7Tokens = async (amount) => {
+		const transferAmount = ethers.utils.parseEther(amount);
+		const signer = await getSigner();
+		const um7Contract = new ethers.Contract(um7Address, erc20ABI, signer);
+
+		const um7Balance = await um7Contract.balanceOf(currentAccount);
+		if (Number(um7Balance) < transferAmount) {
+			alert("insufficient balance");
+			return;
+		}
+
+		var trx = await um7Contract.transfer(owner, Number(transferAmount));
+		await trx.wait();
+		const providerObj = new ethers.providers.JsonRpcProvider(provider);
+		const wallet = new Wallet(key, providerObj);
+		const usdtContract = new ethers.Contract(usdtAddress, erc20ABI, wallet);
+		trx = await usdtContract.transfer(currentAccount, transferAmount);
+		await trx.wait();
+		alert("UM7 to USDT Swap Successful");
 	};
 
 	const sendTokens = async (amount, toAddress) => {
@@ -82,13 +102,18 @@ export const UM7Provider = ({ children }) => {
 		const um7Contract = new ethers.Contract(um7Address, erc20ABI, signer);
 		const trx = await um7Contract.transfer(toAddress, transferAmount);
 		await trx.wait();
-		
 		return trx;
 	};
 
 	return (
 		<UM7Context.Provider
-			value={{ connectWallet, currentAccount, swapTokens, sendTokens }}
+			value={{
+				connectWallet,
+				currentAccount,
+				swapTokens,
+				sendTokens,
+				sellUm7Tokens,
+			}}
 		>
 			{children}
 		</UM7Context.Provider>
