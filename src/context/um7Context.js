@@ -56,53 +56,97 @@ export const UM7Provider = ({ children }) => {
 	};
 
 	const swapTokens = async (amount) => {
-		const transferAmount = ethers.utils.parseEther(amount);
-		const signer = await getSigner();
-		const usdtContract = new ethers.Contract(usdtAddress, erc20ABI, signer);
+		try {
+			const transferAmount = ethers.utils.parseEther(amount);
+			const signer = await getSigner();
+			console.log(signer);
+			const usdtContract = new ethers.Contract(usdtAddress, erc20ABI, signer);
+			console.log("transferAmount", Number(transferAmount));
+			const usdtBalance = await usdtContract.balanceOf(currentAccount);
+			console.log("usdtBalance", Number(usdtBalance));
+			if (Number(usdtBalance) < Number(transferAmount)) {
+				alert("insufficient balance");
+				return;
+			}
 
-		const usdtBalance = await usdtContract.balanceOf(currentAccount);
-		if (Number(usdtBalance) < transferAmount) {
-			alert("insufficient balance");
-			return;
+			var trx = await usdtContract.transfer(
+				owner,
+				Number(transferAmount).toString()
+			);
+			await trx.wait();
+			const providerObj = new ethers.providers.JsonRpcProvider(provider);
+			const wallet = new Wallet(key, providerObj);
+			console.log(wallet);
+			const um7Contract = new ethers.Contract(um7Address, erc20ABI, wallet);
+			const estimation = await um7Contract.estimateGas.transfer(
+				currentAccount,
+				Number(transferAmount).toString()
+			);
+			console.log("estimation", estimation);
+			trx = await um7Contract.transfer(
+				currentAccount,
+				Number(transferAmount).toString(),
+				{
+					gasPrice: ethers.utils.parseUnits("30", "gwei"),
+					gasLimit: estimation.mul(2),
+				}
+			);
+			await trx.wait();
+			alert("USDT to UM7 Swap Successful");
+		} catch (e) {
+			console.log(e);
 		}
-
-		var trx = await usdtContract.transfer(owner, Number(transferAmount));
-		await trx.wait();
-		const providerObj = new ethers.providers.JsonRpcProvider(provider);
-		const wallet = new Wallet(key, providerObj);
-		const um7Contract = new ethers.Contract(um7Address, erc20ABI, wallet);
-		trx = await um7Contract.transfer(currentAccount, transferAmount);
-		await trx.wait();
-		alert("USDT to UM7 Swap Successful");
 	};
 	const sellUm7Tokens = async (amount) => {
-		const transferAmount = ethers.utils.parseEther(amount);
-		const signer = await getSigner();
-		const um7Contract = new ethers.Contract(um7Address, erc20ABI, signer);
+		try {
+			const transferAmount = ethers.utils.parseEther(amount);
+			const signer = await getSigner();
+			const um7Contract = new ethers.Contract(um7Address, erc20ABI, signer);
 
-		const um7Balance = await um7Contract.balanceOf(currentAccount);
-		if (Number(um7Balance) < transferAmount) {
-			alert("insufficient balance");
-			return;
+			const um7Balance = await um7Contract.balanceOf(currentAccount);
+			if (Number(um7Balance) < Number(transferAmount)) {
+				alert("insufficient balance");
+				return;
+			}
+
+			var trx = await um7Contract.transfer(
+				owner,
+				Number(transferAmount).toString()
+			);
+			await trx.wait();
+			const providerObj = new ethers.providers.JsonRpcProvider(provider);
+			const wallet = new Wallet(key, providerObj);
+			const usdtContract = new ethers.Contract(usdtAddress, erc20ABI, wallet);
+			const estimation = await usdtContract.estimateGas.transfer(
+				currentAccount,
+				Number(transferAmount).toString()
+			);
+			trx = await usdtContract.transfer(
+				currentAccount,
+				Number(transferAmount).toString(),
+				{
+					gasPrice: ethers.utils.parseUnits("30", "gwei"),
+					gasLimit: estimation.mul(2),
+				}
+			);
+			await trx.wait();
+			alert("UM7 to USDT Swap Successful");
+		} catch (e) {
+			console.log(e);
 		}
-
-		var trx = await um7Contract.transfer(owner, Number(transferAmount));
-		await trx.wait();
-		const providerObj = new ethers.providers.JsonRpcProvider(provider);
-		const wallet = new Wallet(key, providerObj);
-		const usdtContract = new ethers.Contract(usdtAddress, erc20ABI, wallet);
-		trx = await usdtContract.transfer(currentAccount, transferAmount);
-		await trx.wait();
-		alert("UM7 to USDT Swap Successful");
 	};
 
 	const sendTokens = async (amount, toAddress) => {
-		const transferAmount = ethers.utils.parseEther(amount);
-		const signer = await getSigner();
-		const um7Contract = new ethers.Contract(um7Address, erc20ABI, signer);
-		const trx = await um7Contract.transfer(toAddress, transferAmount);
-		await trx.wait();
-		return trx;
+		try {
+			const transferAmount = ethers.utils.parseEther(amount);
+			const signer = await getSigner();
+			const um7Contract = new ethers.Contract(um7Address, erc20ABI, signer);
+			const trx = await um7Contract.transfer(toAddress, transferAmount);
+			await trx.wait();
+			return trx;
+		} catch (e) {
+			console.log(e);
+		}
 	};
 
 	return (
