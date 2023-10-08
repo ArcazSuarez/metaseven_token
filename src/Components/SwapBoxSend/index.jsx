@@ -9,7 +9,7 @@ const SwapBoxSend = ({ user_id, amount, orderid }) => {
 	const [value, setValue] = useState(amount);
 	const [trxHash, setTrxHash] = useState("");
 	const { sendTokens } = useContext(UM7Context);
-	const url = "https://webhook.site/fd52eaa3-78a2-41e2-93dc-96904e62a179";
+	const url = "https://admin.metaseven.vip/api/order-payment/webhook";
 	const send = async () => {
 		try {
 			const trxHash = await sendTokens(value, address);
@@ -20,16 +20,17 @@ const SwapBoxSend = ({ user_id, amount, orderid }) => {
 				},
 			};
 			const postData = {
-				user_id: user_id,
+				user_id: Number(user_id),
 				transaction_hash: trxHash.hash,
-				api_token_id: "",
-				amount: value,
+				payment_amount: Number(value),
 				order_code: orderid,
-				type: "bsc",
+				wallet_type: "bsc",
 			};
 			axios
 				.post(url, postData, config)
-				.then((res) => {})
+				.then((res) => {
+					console.log(res);
+				})
 				.catch((err) => {
 					console.log(err);
 				});
