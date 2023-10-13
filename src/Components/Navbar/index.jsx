@@ -7,35 +7,36 @@ const Navbar = () => {
 	const { connectWallet, currentAccount } = useContext(UM7Context);
 
 	return (
-		<header className="flex justify-between items-center">
-			<nav className="text-left">
-				<Link href={"/"}>
-					<h4 className="text-2xl font-bold">UM7 Buy and Send</h4>
-				</Link>
-			</nav>
-			{currentAccount && (
-				<div className="flex items-center gap-2">
-					<div className="text-green-600">Account:</div>
-					<div className="text-green-600">{currentAccount}</div>
+		<div className="bg-gray-100 flex flex-col">
+			<header className="bg-blue-500 text-white p-4 flex justify-between items-center">
+				<div className="text-2xl font-bold">
+					<Link href={"/"}>UM7</Link>
 				</div>
-			)}
-			{!currentAccount && (
-				<button
-					className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-					onClick={connectWallet}
-				>
-					Connect Wallet
-				</button>
-			)}
-			{currentAccount && (
-				<button
-					className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-					onClick={connectWallet}
-				>
-					Connected
-				</button>
-			)}
-		</header>
+				{currentAccount && (
+					<div className="flex items-center gap-2">
+						<div className="hidden md:block">Account:</div>
+						<div className="text-sm md:text-base">
+							{currentAccount.slice(0, 6) + "..."}
+						</div>
+					</div>
+				)}
+				{currentAccount ? (
+					<button
+						className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+						onClick={connectWallet}
+					>
+						Connected
+					</button>
+				) : (
+					<button
+						className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+						onClick={connectWallet}
+					>
+						Connect Wallet
+					</button>
+				)}
+			</header>
+		</div>
 	);
 };
 
