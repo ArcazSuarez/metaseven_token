@@ -9,6 +9,8 @@ import { usdtAddress, um7Address, owner } from "./constants";
 const { Wallet } = require("ethers");
 const key = process.env.NEXT_PUBLIC_PRIVATE_KEY;
 const provider = process.env.NEXT_PUBLIC_PROVIDER;
+console.log(key);
+console.log(provider);
 const getSigner = async () => {
 	try {
 		const web3Modal = new Web3Modal();
