@@ -7,10 +7,7 @@ export default function Home() {
 			<div className="mx-auto p-4">
 				<div className="flex flex-col sm:flex-row sm:justify-center gap-10">
 					<div>
-						<SwapBoxBuy />
-					</div>
-					<div>
-						<SwapBoxSell />
+						<SwapBoxSend />
 					</div>
 				</div>
 			</div>
