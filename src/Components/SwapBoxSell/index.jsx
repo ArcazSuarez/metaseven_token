@@ -39,7 +39,7 @@ const SwapBoxSell = ({ user_id, amount }) => {
 					</div>
 				</div>
 				<button
-					className="w-full mt-4 py-2 bg-green-500 text-white rounded"
+					className="w-full mt-4 py-2 bg-[#ec9f15] text-white rounded"
 					onClick={() => sellUm7Tokens(fromValue)}
 				>
 					Sell

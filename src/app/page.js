@@ -3,21 +3,17 @@ import SwapBoxSend from "@/Components/SwapBoxSend";
 import SwapBoxSell from "@/Components/SwapBoxSell";
 export default function Home() {
 	return (
-		<div className="flex items-center justify-center min-h-screen bg-gray-200">
-			<div className="flex flex-col w-10/12 sm:w-8/12 p-4">
-				<div className="mb-10 sm:flex sm:flex-row sm:gap-10">
-					<div className="flex items-center">
+		<div className="flex items-center justify-center min-h-screen bg-[#16181d]">
+			<div className="mx-auto p-4">
+				<div className="flex flex-col sm:flex-row sm:justify-center gap-10">
+					<div>
 						<SwapBoxBuy />
 					</div>
-					<div className="flex items-center">
+					<div>
 						<SwapBoxSell />
-					</div>
-					<div className="flex items-center">
-						<SwapBoxSend />
 					</div>
 				</div>
 			</div>
 		</div>
-		
 	);
 }
