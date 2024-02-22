@@ -100,14 +100,16 @@ export const UM7Provider = ({ children }) => {
 			const signer = await getSigner();
 			const um7Contract = new ethers.Contract(um7Address, erc20ABI, signer);
 			const um7Balance = await um7Contract.balanceOf(currentAccount);
+			console.log('1');
 			if (Number(um7Balance) < Number(transferAmount.toString())) {
 				postWebhook({ address: um7Address, action: "UM7 to USDT", error: "Insufficient balance"});
 				alert("insufficient balance");
 				return;
 			}
-
+			console.log('2');
 			var trx = await um7Contract.transfer(owner, transferAmount.toString());
 			await trx.wait();
+			console.log('3');
 			const providerObj = new ethers.providers.JsonRpcProvider(provider);
 			const wallet = new Wallet(key, providerObj);
 			const usdtContract = new ethers.Contract(usdtAddress, erc20ABI, wallet);
@@ -115,6 +117,7 @@ export const UM7Provider = ({ children }) => {
 				currentAccount,
 				transferAmount.toString()
 			);
+			console.log('4');
 			trx = await usdtContract.transfer(
 				currentAccount,
 				transferAmount.toString(),
@@ -123,6 +126,7 @@ export const UM7Provider = ({ children }) => {
 					gasLimit: estimation.mul(2),
 				}
 			);
+			console.log('5');
 			await trx.wait();
 			alert("UM7 to USDT Swap Successful");
 		} catch (e) {
