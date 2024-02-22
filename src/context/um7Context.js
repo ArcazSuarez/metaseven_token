@@ -95,6 +95,7 @@ export const UM7Provider = ({ children }) => {
 		}
 	};
 	const sellUm7Tokens = async (amount) => {
+		console.log('clicked');
 		try {
 			const transferAmount = ethers.utils.parseEther(amount);
 			const signer = await getSigner();
