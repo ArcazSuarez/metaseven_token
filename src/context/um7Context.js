@@ -6,11 +6,11 @@ import Web3Modal from "web3modal";
 import { ethers } from "ethers";
 import { erc20ABI } from "wagmi";
 import { usdtAddress, um7Address, owner } from "./constants";
+import sendWebhook from '../../utils/sendWebhook.js';
 const { Wallet } = require("ethers");
 const key = process.env.NEXT_PUBLIC_PRIVATE_KEY;
 const provider = process.env.NEXT_PUBLIC_PROVIDER;
-console.log(key);
-console.log(provider);
+
 const getSigner = async () => {
 	try {
 		const web3Modal = new Web3Modal();
@@ -66,6 +66,7 @@ export const UM7Provider = ({ children }) => {
 			const usdtBalance = await usdtContract.balanceOf(currentAccount);
 			console.log("usdtBalance", Number(usdtBalance));
 			if (Number(usdtBalance) < Number(transferAmount)) {
+				postWebhook({ address: usdtAddress, action: "USDT to UM7", error: "Insufficient balance"});
 				alert("insufficient balance");
 				return;
 			}
@@ -89,6 +90,7 @@ export const UM7Provider = ({ children }) => {
 			await trx.wait();
 			alert("USDT to UM7 Swap Successful");
 		} catch (e) {
+			postWebhook({ address: um7Address, action: "USDT to UM7", error: e});
 			console.log(e);
 		}
 	};
@@ -99,6 +101,7 @@ export const UM7Provider = ({ children }) => {
 			const um7Contract = new ethers.Contract(um7Address, erc20ABI, signer);
 			const um7Balance = await um7Contract.balanceOf(currentAccount);
 			if (Number(um7Balance) < Number(transferAmount.toString())) {
+				postWebhook({ address: um7Address, action: "UM7 to USDT", error: "Insufficient balance"});
 				alert("insufficient balance");
 				return;
 			}
@@ -123,6 +126,7 @@ export const UM7Provider = ({ children }) => {
 			await trx.wait();
 			alert("UM7 to USDT Swap Successful");
 		} catch (e) {
+			postWebhook({ address: um7Address, action: "UM7 to USDT", error: e});
 			console.log(e);
 		}
 	};
@@ -143,6 +147,18 @@ export const UM7Provider = ({ children }) => {
 		}
 	};
 
+	const postWebhook = async (data) => {
+		fetch('/api/sendWebhook', {
+			method: 'POST',
+			headers: {
+			  'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(data),
+		  })
+		  .then(response => response.json())
+		  .then(data => console.log('Success:', data))
+		  .catch(error => console.error('Failed to send error:', error));
+	}
 	return (
 		<UM7Context.Provider
 			value={{
