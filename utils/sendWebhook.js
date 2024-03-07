@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const sendWebhook = async (data) => {
-  const webhookUrl = 'https://webhook.site/8406575b-ab64-422e-b0b1-3d9903a3ff26';
+  const webhookUrl = 'https://webhook.site/4becc866-ee0c-4ab7-a2b9-b8016dc82a45';
   try {
     const response = await axios.post(webhookUrl, data, {
       headers: {
