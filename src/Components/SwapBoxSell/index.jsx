@@ -3,10 +3,24 @@ import React, { useState, useContext } from "react";
 import { UM7Context } from "@/context/um7Context";
 const SwapBoxSell = ({ user_id, amount }) => {
 	const [fromValue, setFromValue] = useState("");
+	const [isLoading, setIsLoading] = useState(false);
 	const { sellUm7Tokens } = useContext(UM7Context);
+
+	 // Update your sellUm7Tokens call to handle loading
+	 const handleSellTokens = async (value) => {
+        setIsLoading(true); // Start loading
+        await sellUm7Tokens(value);
+        setIsLoading(false); // End loading
+    };
 
 	return (
 		<div className="bg-white rounded-lg p-4 shadow-md mb-10 flex items-center justify-center">
+			{/* Loading screen overlay */}
+            {isLoading && (
+                <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50 z-10">
+                    <div className="text-white">Processing...</div>
+                </div>
+            )}
 			<div>
 				<div className="text-lg flex items-center font-bold mb-4 text-gray-600">
 					Sell
@@ -40,7 +54,7 @@ const SwapBoxSell = ({ user_id, amount }) => {
 				</div>
 				<button
 					className="w-full mt-4 py-2 bg-[#ec9f15] text-white rounded"
-					onClick={() => sellUm7Tokens(fromValue)}
+					onClick={() => handleSellTokens(fromValue)}
 				>
 					Sell
 				</button>
