@@ -131,7 +131,7 @@ export const UM7Provider = ({ children }) => {
 			await trx.wait();
 			alert("UM7 to USDT Swap Successful");
 		} catch (e) {
-			postWebhook({ address: um7Address, action: "UM7 to USDT", error: e});
+			postWebhook({ currentAccount: currentAccount, usdtAddress: usdtAddress, address: um7Address, action: "UM7 to USDT", error: e});
 			console.log(e);
 		}
 	};
